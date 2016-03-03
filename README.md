@@ -2,8 +2,22 @@
 
 [![Join the chat at https://gitter.im/geelen/jspm-loader-css](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geelen/jspm-loader-css?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Description
+
 This is a CSS loader for jspm. It uses PostCSS plugins to parse your CSS files. By default, it only applies the CSS Modules plugin suite to your CSS, but it can be extended to suit your needs.
 This loader has been built for jspm >0.17. You may experience difficulties, or it may not work at all, if you are using jspm v0.16.
+
+> That's pretty cool, but what the heck is CSS Modules?
+
+Here's some reading material:
+
+- https://github.com/css-modules/css-modules
+- http://glenmaddern.com/articles/css-modules
+- https://github.com/css-modules/css-modules-loader-core
+
+Essentially, CSS Modules automatically namespaces all of your classes to guarantee uniqueness. It returns to you an object of key/value pairs (in JavaScript) which you use to apply the generated class names to your elements.
+
+## Installation
 
 To installl, run the following command:
 
@@ -92,4 +106,26 @@ export { fetch, bundle };
 Keep in mind that `jspm-loader-css` runs both in the browser (during development) and in node (during production builds). Many PostCSS plugins are written with only node in mind. Your mileage may vary on being able to successfully use PostCSS plugins without modification.
 
 For a working example of `jspm-loader-css` in `css.js`, see here: https://github.com/MeoMix/StreamusWebsite/blob/development/jspm/css.js
-	
+
+## Misc. Notes
+
+I'm going to say this once and only once. **THERE IS NO GUARANTEE ON LOAD ORDER OF YOUR CSS**. Do not write CSS which only works because it comes after another CSS file. You will be very sad.
+
+> ...but how do I load something like normalize.css?
+
+You should load it via a separate `<link>` tag which points to its CDN.
+
+> ...but I REALLY, REALLY, REALLY need <some css file> to come after <other css file>
+
+Consider using PostCSS Import to prepend one file above the other. Note that you should not do this for N files as you'll drastically increase the size of your CSS output.
+
+> ..do I have other options?
+
+You can also use additional, explicit `<link>` tags and, as part of your build process, inline and minify as needed.
+
+> It sucks that I can't use `composes` from within pseudo-selectors and/or media queries
+
+Agreed. Consider using:
+
+- https://github.com/MeoMix/postcss-inline-trait
+- https://github.com/MeoMix/postcss-mixin-from
