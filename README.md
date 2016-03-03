@@ -115,9 +115,11 @@ I'm going to say this once and only once. **THERE IS NO GUARANTEE ON LOAD ORDER 
 
 You should load it via a separate `<link>` tag which points to its CDN.
 
-> ...but I REALLY, REALLY, REALLY need <some css file> to come after <other css file>
+> ...but I REALLY, REALLY, REALLY need one of my CSS files to come after another
 
-Consider using PostCSS Import to prepend one file above the other. Note that you should not do this for N files as you'll drastically increase the size of your CSS output.
+Consider using [PostCSS-Import](https://github.com/postcss/postcss-import) to prepend one file above the other. Note that you should not do this for N files as you'll drastically increase the size of your CSS output.
+
+You'll actually want to use my fork of `postcss-import`, https://github.com/MeoMix/postcss-import as the default repository doesn't (currently) work in browser environments. See the example `css.js` file above for more information.
 
 > ..do I have other options?
 
