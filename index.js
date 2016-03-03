@@ -1,5 +1,5 @@
-import { Plugins } from './lib/plugins';
-import { CSSLoader } from './lib/CSSLoader';
+import Plugins from './lib/plugins.js';
+import CSSLoader from './lib/CSSLoader.js';
 
 const { fetch, bundle } = new CSSLoader([
   Plugins.values,
