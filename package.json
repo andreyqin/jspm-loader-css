@@ -6,8 +6,7 @@
   "description": "A CSS Modules + PostCSS plugin loader for JSPM.",
   "dependencies": {
     "css-modules-loader-core": "^1.0.0-beta2",
-    "cssnano": "^3.5.2",
-    "path": "^0.12.7"
+    "cssnano": "^3.5.2"
   },
   "devDependencies": {
     "babel-eslint": "^4.1.8",
