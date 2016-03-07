@@ -70,8 +70,8 @@ where `css.js` is a file you create yourself. You can place `css.js` in a direct
 You'll need to import `jspm-loader-css` from within `css.js` like so:
 
 ```
-import Plugins from 'jspm-loader-css/lib/plugins.js'
-import CSSLoader from 'jspm-loader-css/lib/CSSLoader.js'
+import Plugins from 'jspm-loader-css/src/plugins.js'
+import Loader from 'jspm-loader-css/src/loader.js'
 
 const plugins = [
   Plugins.values,
@@ -80,15 +80,15 @@ const plugins = [
   Plugins.scope
 ];
 
-const { fetch, bundle } = new CSSLoader(plugins);
+const { fetch, bundle } = new Loader(plugins);
 export { fetch, bundle };
 ```
 
 The above code will perform identically to the default behavior of `jspm-loader-css`. You are then free to add additional plugins to the mixture, such as:
 
 ```
-import Plugins from 'jspm-loader-css/lib/plugins.js'
-import CSSLoader from 'jspm-loader-css/lib/CSSLoader.js'
+import Plugins from 'jspm-loader-css/src/plugins.js'
+import Loader from 'jspm-loader-css/src/loader.js'
 import autoprefixer from 'autoprefixer';
 
 const plugins = [
@@ -99,7 +99,7 @@ const plugins = [
   autoprefixer()
 ];
 
-const { fetch, bundle } = new CSSLoader(plugins);
+const { fetch, bundle } = new Loader(plugins);
 export { fetch, bundle };
 ```
 
