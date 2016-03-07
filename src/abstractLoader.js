@@ -1,3 +1,4 @@
+/* eslint-env node, browser */
 import CssModulesLoaderCore from 'css-modules-loader-core';
 
 export default class CSSModuleLoaderProcess {

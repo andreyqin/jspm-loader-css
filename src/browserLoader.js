@@ -1,7 +1,7 @@
 /* eslint-env browser */
-import CSSModuleLoaderProcess from './CSSModuleLoaderProcess.js';
+import AbstractLoader from './abstractLoader.js';
 
-export default class CSSLoaderDOM extends CSSModuleLoaderProcess {
+export default class BrowserLoader extends AbstractLoader {
   constructor(plugins) {
     super(plugins);
 

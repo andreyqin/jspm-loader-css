@@ -1,4 +1,5 @@
-import CSSModuleLoaderProcess from './CSSModuleLoaderProcess.js';
+/* eslint-env node */
+import AbstractLoader from './abstractLoader.js';
 
 // Append a <style> tag to the page and fill it with inline CSS styles.
 const cssInjectFunction = `(function(c){
@@ -25,7 +26,7 @@ const emptySystemRegister = (system, name) => {
   return `${system}.register('${name}', [], function() { return { setters: [], execute: function() {}}});`;
 };
 
-export default class CSSLoaderBuilded extends CSSModuleLoaderProcess {
+export default class NodeLoader extends AbstractLoader {
   constructor(plugins) {
     super(plugins);
 

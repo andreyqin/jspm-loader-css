@@ -1,11 +1,11 @@
-import Plugins from './lib/plugins.js';
-import CSSLoader from './lib/CSSLoader.js';
+import Plugins from './src/plugins.js';
+import Loader from './src/loader.js';
 
-const { fetch, bundle } = new CSSLoader([
+const { fetch, bundle } = new Loader([
   Plugins.values,
   Plugins.localByDefault,
   Plugins.extractImports,
   Plugins.scope
 ]);
 
-export { CSSLoader, Plugins, fetch, bundle };
+export { Loader, Plugins, fetch, bundle };
