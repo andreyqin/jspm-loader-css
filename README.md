@@ -22,7 +22,7 @@ Essentially, CSS Modules automatically namespaces all of your classes to guarant
 To installl, run the following command:
 
 ```
-jspm install github:MeoMix/jspm-loader-css@master -o "{ registry: 'npm' }"
+jspm install github:MeoMix/jspm-loader-css@master"
 ```
 
 and in `jspm.config.js` you'll need to add the following:
