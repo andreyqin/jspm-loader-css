@@ -35,5 +35,10 @@
     "url": "https://github.com/MeoMix/jspm-loader-css/issues"
   },
   "homepage": "https://github.com/MeoMix/jspm-loader-css",
-  "registry": "npm"
+  "registry": "npm",
+  "jspm": {
+    "browser": {
+      "cssnano": "@empty"
+    }
+  }
 }

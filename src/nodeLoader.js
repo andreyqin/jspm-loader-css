@@ -1,5 +1,6 @@
 /* eslint-env node */
 import AbstractLoader from './abstractLoader.js';
+import cssnano from 'cssnano';
 
 // Append a <style> tag to the page and fill it with inline CSS styles.
 const cssInjectFunction = `(function(c){
@@ -61,23 +62,19 @@ export default class NodeLoader extends AbstractLoader {
     }
     /*eslint-enable  no-console */
 
-    // It's important to load cssnano only from within `bundle` because it has node dependencies upon import which
-    // should not be fulfilled in the browser.
-    return System.import('cssnano').then((cssnano) => {
-      return cssnano.process(this._injectableSources.join('\n'), {
-        // A full list of options can be found here: http://cssnano.co/options/
-        // safe: true ensures no optimizations are applied which could potentially break the output.
-        safe: true
-      }).then((result) => {
-        // Take all of the CSS files which need to be output and generate a fake System registration for them.
-        // This will make System believe all files exist as needed.
-        // Then, take the combined output of all the CSS files and generate a single <style> tag holding all the info.
-        const fileDefinitions = loads
-          .map((load) => emptySystemRegister(compileOpts.systemGlobal || 'System', load.name))
-          .join('\n');
+    return cssnano.process(this._injectableSources.join('\n'), {
+      // A full list of options can be found here: http://cssnano.co/options/
+      // safe: true ensures no optimizations are applied which could potentially break the output.
+      safe: true
+    }).then((result) => {
+      // Take all of the CSS files which need to be output and generate a fake System registration for them.
+      // This will make System believe all files exist as needed.
+      // Then, take the combined output of all the CSS files and generate a single <style> tag holding all the info.
+      const fileDefinitions = loads
+        .map((load) => emptySystemRegister(compileOpts.systemGlobal || 'System', load.name))
+        .join('\n');
 
-        return `${fileDefinitions}${cssInjectFunction}('${escape(result.css)}');`;
-      });
+      return `${fileDefinitions}${cssInjectFunction}('${escape(result.css)}');`;
     });
   }
 }
