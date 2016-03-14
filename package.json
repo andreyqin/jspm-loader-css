@@ -38,7 +38,7 @@
   "registry": "npm",
   "jspm": {
     "browser": {
-      "cssnano": false
+      "cssnano": "@empty"
     }
   }
 }
