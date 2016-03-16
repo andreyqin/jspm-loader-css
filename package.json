@@ -37,6 +37,7 @@
   "homepage": "https://github.com/MeoMix/jspm-loader-css",
   "registry": "npm",
   "jspm": {
+    "jspmNodeConversion": false,
     "browser": {
       "cssnano": "@empty"
     }
