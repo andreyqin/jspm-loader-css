@@ -38,13 +38,7 @@
   "registry": "npm",
   "jspm": {
     "browser": {
-      "cssnano": "@empty"
-    },
-    "map": {
-      "cssnano": {
-        "node": "node-cssnano",
-        "default": "@empty"
-      }
+      "cssnano": false
     }
   }
 }
