@@ -17,9 +17,32 @@ export default class CSSModuleLoaderProcess {
         this._cssModulesLoader.load(source, sourcePath, '', this._fetchDependencies.bind(this))
       )
       .then(({ injectableSource, exportTokens }) => {
+        let exportedTokens;
+        if (!System.production && window.Proxy) {
+          // During development, if supported, use a Proxy to detect missing CSS declarations.
+          // Note the wrapping `'s - this is code exported as a string and executed later.
+          exportedTokens = `
+            const styles = JSON.parse('${JSON.stringify(exportTokens)}');
+            const propertyWhitelist = ['__esModule', 'then', 'default', 'trim'];
+            const proxy = new Proxy(styles, {
+              get: function(target, name) {
+                if(!target.hasOwnProperty(name) && !propertyWhitelist.includes(name)) {
+                  console.warn('Styles lookup at key: ' + name + ' found no CSS.');
+                }
+              
+                return target[name];
+              }
+            });
+          
+            module.exports = proxy;
+        `;
+        } else {
+          exportedTokens = `module.exports = ${JSON.stringify(exportTokens)};`;
+        }
+
         return {
           name: sourcePath,
-          exportedTokens: `module.exports = ${JSON.stringify(exportTokens)}`,
+          exportedTokens,
           injectableSource
         };
       });
