@@ -18,7 +18,7 @@ export default class CSSModuleLoaderProcess {
       )
       .then(({ injectableSource, exportTokens }) => {
         let exportedTokens;
-        if (!System.production && window.Proxy) {
+        if (!System.production && window && window.Proxy) {
           // During development, if supported, use a Proxy to detect missing CSS declarations.
           // Note the wrapping `'s - this is code exported as a string and executed later.
           exportedTokens = `
