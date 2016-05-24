@@ -38,7 +38,7 @@ export default class CSSModuleLoaderProcess {
             module.exports = proxy;
         `;
         } else {
-          exportedTokens = `module.exports = ${exportTokensString};`;
+          exportedTokens = `module.exports = JSON.parse('${exportTokensString}');`;
         }
 
         return {
