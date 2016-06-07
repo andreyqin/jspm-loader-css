@@ -79,6 +79,14 @@
       "default": "@empty"
     }
   },
+	"jspm": {
+		"map": {
+			"cssnano": {
+				"node": "cssnano",
+				"default": "@empty"
+			}
+		}
+	},
   "overrides": {
     "npm:bluebird@3.4.0": {
       "meta": {
