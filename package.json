@@ -144,10 +144,8 @@
         "stream-browserify": "~1.0.0"
       }
     },
-		"map": {
-			"cssnano": {
-				"browser": "@empty"
-			}
+		"cssnano": {
+			"browser": "@empty"
 		}
   }
 }
