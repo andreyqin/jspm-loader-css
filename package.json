@@ -143,6 +143,11 @@
         "inherits": "~2.0.1",
         "stream-browserify": "~1.0.0"
       }
-    }
+    },
+		"map": {
+			"cssnano": {
+				"browser": "@empty"
+			}
+		}
   }
 }
