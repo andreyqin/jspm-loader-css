@@ -2721,6 +2721,11 @@ SystemJS.config({
         "*.js": {
           "loader": "plugin-babel"
         }
+      },
+      "map": {
+        "cssnano": {
+          "browser": "@empty"
+        }
       }
     },
     "npm:autoprefixer@6.3.6": {
