@@ -73,6 +73,9 @@
   },
   "homepage": "https://github.com/MeoMix/jspm-loader-css",
   "registry": "npm",
+	"map": {
+		"cssnano": "@empty"
+	},
   "overrides": {
     "npm:bluebird@3.4.0": {
       "meta": {
