@@ -76,6 +76,11 @@
 	"map": {
 		"cssnano": "@empty"
 	},
+	"jspm": {
+		"map": {
+			"cssnano": "@empty"
+		}
+	},
   "overrides": {
     "npm:bluebird@3.4.0": {
       "meta": {
