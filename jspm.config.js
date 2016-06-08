@@ -3076,7 +3076,10 @@ SystemJS.config({
   },
   map: {
     "css-modules-loader-core": "npm:css-modules-loader-core@1.0.0",
-    "cssnano": "npm:cssnano@3.7.0",
+    "cssnano": {
+      "default": "@empty",
+      "node": "npm:cssnano@3.7.0"
+    },
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.12"
   }
 });
