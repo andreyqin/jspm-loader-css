@@ -40,5 +40,11 @@
     "browser": {
       "cssnano": false
     }
+  },
+  "map": {
+    "./src/loader.js": {
+      "node": "./src/nodeLoader.js",
+      "browser": "./src/browserLoader.js"
+    }
   }
 }
