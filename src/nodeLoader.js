@@ -31,7 +31,7 @@ export default class NodeLoader extends AbstractLoader {
   constructor(plugins) {
     super(plugins);
 
-    this._injectableSources = [];
+    this._injectableSources = {};
 
     this.fetch = this.fetch.bind(this);
     this.bundle = this.bundle.bind(this);
@@ -40,7 +40,11 @@ export default class NodeLoader extends AbstractLoader {
   fetch(load, systemFetch) {
     return super.fetch(load, systemFetch)
       .then((styleSheet) => {
-        this._injectableSources.push(styleSheet.injectableSource);
+        /* If jspm / systemjs-builder are watching for file changes, this
+         * will get called for the same file multiple times. So we overwrite
+         * the previous injectableSource with the new one.
+         */
+        this._injectableSources[load.address] = styleSheet.injectableSource;
         return styleSheet;
       })
       // Return the export tokens to the js files
@@ -54,15 +58,16 @@ export default class NodeLoader extends AbstractLoader {
     }
 
     if (outputOpts.separateCSS === true) {
-      console.warn('Separting CSS not yet supported.');
+      console.warn('Separating CSS not yet supported.');
     }
 
     if (outputOpts.sourceMaps === true) {
-      console.warn('Source Maps not yet supported');
+      console.warn('Source maps for css modules are not yet supported');
     }
     /*eslint-enable  no-console */
 
-    return cssnano.process(this._injectableSources.join('\n'), {
+    const sourcesString = Object.keys(this._injectableSources).reduce((str, source) => str + this._injectableSources[source] + '\n', '');
+    return cssnano.process(sourcesString, {
       // A full list of options can be found here: http://cssnano.co/options/
       // safe: true ensures no optimizations are applied which could potentially break the output.
       safe: true
