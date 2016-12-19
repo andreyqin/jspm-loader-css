@@ -3,11 +3,20 @@ import AbstractLoader from './abstractLoader.js';
 import cssnano from 'cssnano';
 
 // Append a <style> tag to the page and fill it with inline CSS styles.
-const cssInjectFunction = `(function(c){
-  var d=document,a="appendChild",i="styleSheet",s=d.createElement("style");
-  d.head[a](s);
-  s[i]?s[i].cssText=c:s[a](d.createTextNode(c));
-})`;
+function cssInjectFunction(compileOpts, cssOptions) {
+  let id = compileOpts.entryPoints.length > 0 ? compileOpts.entryPoints[0] + "-styles" : null;
+
+  if (cssOptions.bundledStyleTagId) {
+	  id = cssOptions.bundledStyleTagId;
+  }
+
+  const setId = id ? `s.setAttribute("id", "${id}");` : ``;
+  return `(function(c){
+    var d=document,a="appendChild",i="styleSheet",s=d.createElement("style");${setId}
+    d.head[a](s);
+    s[i]?s[i].cssText=c:s[a](d.createTextNode(c));
+  })`;
+}
 
 // Escape any whitespace characters before outputting as string so that data integrity can be preserved.
 const escape = (source) => {
@@ -35,9 +44,13 @@ export default class NodeLoader extends AbstractLoader {
 
     this.fetch = this.fetch.bind(this);
     this.bundle = this.bundle.bind(this);
+    this.cssOptions = {};
   }
 
   fetch(load, systemFetch) {
+    if (load.metadata.cssOptions) {
+      this.cssOptions = load.metadata.cssOptions;
+    }
     return super.fetch(load, systemFetch)
       .then((styleSheet) => {
         /* If jspm / systemjs-builder are watching for file changes, this
@@ -79,7 +92,7 @@ export default class NodeLoader extends AbstractLoader {
         .map((load) => emptySystemRegister(compileOpts.systemGlobal || 'System', load.name))
         .join('\n');
 
-      return `${fileDefinitions}${cssInjectFunction}('${escape(result.css)}');`;
+      return `${fileDefinitions}${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
     });
   }
 }

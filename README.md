@@ -27,12 +27,13 @@ jspm install github:MeoMix/jspm-loader-css@master"
 
 and in `jspm.config.js` you'll need to add the following:
 
-```
+```js
 SystemJS.config({
   ...
   meta: {
     "*.css": {
-      "loader": "jspm-loader-css"
+      "loader": "jspm-loader-css",
+      "cssOptions": {}
     }
   },
   ...
@@ -106,6 +107,24 @@ export { fetch, bundle };
 Keep in mind that `jspm-loader-css` runs both in the browser (during development) and in node (during production builds). Many PostCSS plugins are written with only node in mind. Your mileage may vary on being able to successfully use PostCSS plugins without modification.
 
 For a working example of `jspm-loader-css` in `css.js`, see here: https://github.com/MeoMix/StreamusWebsite/blob/development/jspm/css.js
+
+## Passing cssOptions to jspm-loader-css
+To specify options to jspm-loader-css, provide a `cssOptions` configuration:
+```js
+SystemJS.config({
+  meta: {
+    "*.css": {
+      "loader": "jspm-loader-css",
+      "cssOptions": {
+        "bundledStyleTagId": "id-of-style-element"
+      }
+    }
+  },
+});
+```
+
+The options supported include:
+- `bundledStyleTagId`: a string that will be the `id` of the `<style>` element that contains the CSS for a bundled project. If not provided, the name of the first entry point being bundled will be used. When css files are not being bundled, this configuration option does not apply.
 
 ## Misc. Notes
 
