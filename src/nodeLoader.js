@@ -85,14 +85,7 @@ export default class NodeLoader extends AbstractLoader {
       // safe: true ensures no optimizations are applied which could potentially break the output.
       safe: true
     }).then((result) => {
-      // Take all of the CSS files which need to be output and generate a fake System registration for them.
-      // This will make System believe all files exist as needed.
-      // Then, take the combined output of all the CSS files and generate a single <style> tag holding all the info.
-      const fileDefinitions = loads
-        .map((load) => emptySystemRegister(compileOpts.systemGlobal || 'System', load.name))
-        .join('\n');
-
-      return `${fileDefinitions}${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
+      return `${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
     });
   }
 }

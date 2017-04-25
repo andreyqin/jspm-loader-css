@@ -30,11 +30,11 @@ export default class CSSModuleLoaderProcess {
                 if(!target.hasOwnProperty(name) && !propertyWhitelist.includes(name)) {
                   console.warn('Styles lookup at key: ' + name + ' found no CSS.');
                 }
-              
+
                 return target[name];
               }
             });
-          
+
             module.exports = proxy;
         `;
         } else {
@@ -44,6 +44,7 @@ export default class CSSModuleLoaderProcess {
         return {
           name: sourcePath,
           exportedTokens,
+          exportTokens,
           injectableSource
         };
       });
