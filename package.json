@@ -8,6 +8,7 @@
     "cssnano": "^3.5.2"
   },
   "devDependencies": {
+    "autoprefixer": "^8.0.0",
     "babel-cli": "^6.6.5",
     "babel-core": "^6.6.5",
     "babel-plugin-transform-runtime": "^6.23.0",
