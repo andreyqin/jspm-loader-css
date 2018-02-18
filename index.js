@@ -5,7 +5,8 @@ const { fetch, bundle } = new Loader([
   Plugins.values,
   Plugins.localByDefault,
   Plugins.extractImports,
-  Plugins.scope
+  Plugins.scope,
+  Plugins.autoprefixer()
 ]);
 
 export { Loader, Plugins, fetch, bundle };
