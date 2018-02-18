@@ -1,6 +1,8 @@
 /* eslint-env node */
 import AbstractLoader from './abstractLoader.js';
 import cssnano from 'cssnano';
+import fs from 'fs';
+import path from 'path';
 
 // Append a <style> tag to the page and fill it with inline CSS styles.
 function cssInjectFunction(compileOpts, cssOptions) {
@@ -65,27 +67,18 @@ export default class NodeLoader extends AbstractLoader {
   }
 
   bundle(loads, compileOpts, outputOpts) {
-    /*eslint-disable no-console */
-    if (outputOpts.buildCSS === false) {
-      console.warn('Opting out of buildCSS not yet supported.');
-    }
-
-    if (outputOpts.separateCSS === true) {
-      console.warn('Separating CSS not yet supported.');
-    }
-
-    if (outputOpts.sourceMaps === true) {
-      console.warn('Source maps for css modules are not yet supported');
-    }
-    /*eslint-enable  no-console */
-
     const sourcesString = Object.keys(this._injectableSources).reduce((str, source) => str + this._injectableSources[source] + '\n', '');
     return cssnano.process(sourcesString, {
-      // A full list of options can be found here: http://cssnano.co/options/
-      // safe: true ensures no optimizations are applied which could potentially break the output.
       safe: true
     }).then((result) => {
-      return `${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
+      if (outputOpts.separateCSS) {
+        const outFile = outputOpts.outCSSFile || outputOpts.outFile;
+        const outCSSFile = path.resolve(outFile).replace(/\.js$/, '.css');
+        
+        fs.writeFileSync(outCSSFile, result.css);
+      } else {
+        return `${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
+      }
     });
   }
 }
