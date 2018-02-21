@@ -71,10 +71,12 @@ export default class NodeLoader extends AbstractLoader {
     return cssnano.process(sourcesString, {
       safe: true
     }).then((result) => {
-      if (outputOpts.separateCSS) {
-        const outFile = outputOpts.outCSSFile || outputOpts.outFile;
+      const separateCSS = this.cssOptions.separateCSS || outputOpts.separateCSS;
+
+      if (separateCSS) {
+        const outFile = this.cssOptions.outFile || outputOpts.outCSSFile || outputOpts.outFile;
         const outCSSFile = path.resolve(outFile).replace(/\.js$/, '.css');
-        
+
         fs.writeFileSync(outCSSFile, result.css);
       } else {
         return `${cssInjectFunction(compileOpts, this.cssOptions)}('${escape(result.css)}');`;
